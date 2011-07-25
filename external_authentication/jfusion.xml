@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
+<install type="jfusion" version="1.5.1">
+        <name>prestashop</name>
+        <author>Wade Penistone</author>
+        <creationDate>September 2010</creationDate>
+        <copyright>Copyright GPL (C) 2008 Open Source Matters. All rights
+                reserved.</copyright>
+        <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+        <authorEmail>w.penistone@mediacityonline.net</authorEmail>
+        <authorUrl>www.mediacityonline.net</authorUrl>
+        <version>1.5.1-000</version>
+        <description>PrestaShop plugin for JFusion</description>
+        <slave>0</slave>
+        <dual_login>0</dual_login>
+        <activity>1</activity>
+        <discussion>1</discussion>
+        <search>1</search>
+        <files>
+                <filename>admin.php</filename>
+                <filename>auth.php</filename>
+                <filename>index.html</filename>
+                <filename>jfusion.xml</filename>
+                <filename>public.php</filename>
+                <filename>user.php</filename>
+        </files>
+        <params addpath="/administrator/components/com_jfusion/elements">
+                <param name="jfusionbox" type="text" default="" label="PLUGIN_GENERAL_DETAILS" description="" />
+                <param name="description" type="text" size="60" default="Presta Shop" description="DESCRIPTION"/>
+                <param name="source_url" type="text" size="60" default="http://www.yourdomain.com/prestashop/" description="SOURCE_URL" />
+                <param name="source_path" type="text" size="60" default="" description="SOURCE_PATH" />
+
+
+                <param name="    " type="helptext" default="In order to disable registration in PrestaShop you must modify a core file currently to add a piece of code to disable it. The code extract and instructions can be found on the JFusion website"/>    
+    
+    <param name="cookie_domain" type="text" size="60" default="" description="COOKIE_DOMAIN" />
+                <param name="cookie_path" type="text" size="20" default="/" description="COOKIE_PATH" />
+				<param name="cookie_key" type="text" size="20" default="Needed or login will not work" description="COOKIE_KEY" />
+
+
+                <param name="jfusionbox" type="text" default="" label="DATABASE_OPTIONS" description="" />
+                <param name="database_type" type="text" size="20" default="" description="DATABASE_TYPE"/>
+                <param name="database_host" type="text" size="20" default="" description="DATABASE_HOST"/>
+                <param name="database_name" type="text" size="20" default="" description="DATABASE_NAME"/>
+                <param name="database_user" type="text" size="20" default="" description="DATABASE_USER"/>
+                <param name="database_password" type="password" size="20" default="" description="DATABASE_PASSWORD"/>
+                <param name="database_prefix" type="text" size="20" default="" description="DATABASE_PREFIX"/>
+                <param name="database_charset" type="text" size="20" default="utf8" description="DATABASE_CHARSET"/>
+                <param name="jfusionbox" type="text" default="" label="USER_OPTIONS" description="" />
+                <param name="usergroup" default="" type="JFusionCustomParam"
+                       label="USERGROUP_MANAGEMENT" description="ADVANCED_USERGROUP" />
+
+
+
+                <param name=" " type="helptext" default="DEFAULT_USERGROUP_DESCR"/>
+
+
+        
+                <param name=" " type="helptext" default="AUTO_UPDATE_DESCR"/>
+                <param name="update_activation" type="list" default="1" label="" description="UPDATE_ACTIVATION">
+                        <option value="1">YES</option>
+                        <option value="0">NO</option>
+                </param>
+                <param name="update_block" type="list" default="1" label="" description="UPDATE_BLOCK">
+                        <option value="1">YES</option>
+                        <option value="0">NO</option>
+                </param>
+                <param name="update_email" type="list" default="1" label="" description="UPDATE_EMAIL">
+                        <option value="1">YES</option>
+                        <option value="0">NO</option>
+                </param>
+                <param name="create_inactive" type="list" default="1" label="" description="CREATE_INACTIVE">
+                        <option value="1">YES</option>
+                        <option value="0">NO</option>
+                </param>
+                <param name="create_blocked" type="list" default="1" label="" description="CREATE_BLOCKED">
+                        <option value="1">YES</option>
+                        <option value="0">NO</option>
+                </param>        
+
+
+        </params>
+
+
+</install>
