@@ -1,0 +1,28 @@
+INSTRUCTIONS ON HOW TO INSTALL AND CONFIGURE THIS PLUGIN
+
+This external plugin for JFusion allows connection to any external site using any method your server supports as long as the required configuration settings are correct,
+and the other site is configured correctly aswell.
+
+INSTALLING
+Navigate to your Joomla administrator page (joomla/administrator) and select JFusion from the componenets dropdown and on the submenu click "Plugin manager", 
+or click JFusion to go to the JFusion page and click "manage plugins". You should be able to see at the bottom 3 options for installing this plugin:
+
+Choose any of the 3 methods to upload the plugin (with all the files still in an archive not extracted)
+- Upload Package File 
+- Install from directory 	  
+- Install from URL 
+
+UPLOAD PACKAGE FILE
+Using this method you simply upload you plugin file (a zip file or archive of simillar variety) through the upload box which when you
+click upload it will put the plugin on your server and install it.
+
+INSTALL FROM DIRECTORY
+If you already have the plugin uploaded on your site (manually taking an automatic step of the first method) you can simply point Joomla to where your plugin is by typing
+a relative link and clicking install (type ../ to go up one directory).
+
+INSTALL FROM URL
+If the plugin file is located on another server you can use an absalute URL to point joomla to the file which is the same method as the second but the plugin can be
+located on any server as long as it grants access to download.
+
+CONFIGURING
+Once installed the plugin just needs configuring and the settings tested to confirm it is working as intended.
