@@ -88,9 +88,6 @@ class JFusionAdmin_prestashop extends JFusionAdmin
 	}
 	
 	function setupFromPath($storePath) {
-	    $config = JFusionAdmin_prestashop::loadSetup($storePath);
-        if (!empty($config)) {
-            //save the parameters into array
             $params = array();
             $params['database_host'] = $config['_DB_SERVER_'];
             $params['database_name'] = $config['_DB_NAME_'];

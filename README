@@ -3,6 +3,9 @@ INSTRUCTIONS ON HOW TO INSTALL AND CONFIGURE THIS PLUGIN
 This external plugin for JFusion allows connection to any external site using any method your server supports as long as the required configuration settings are correct,
 and the other site is configured correctly aswell.
 
+IMPORTANT: CONFIGURE THE PLUGIN FILES BY EDITING THE CODE IN THEM AND MAKE SURE THE EXTERNAL SERVER API IS COMPATABLE WITH THE PLUGIN BEFORE TRYING THIS OUT FOR USE WITH
+TWO PRODUCTION SITES. FOR INFORMATION ON THAT PLEASE REFER TO THE DOCUMENTATION AND WIKI PAGES.
+
 INSTALLING
 Navigate to your Joomla administrator page (joomla/administrator) and select JFusion from the componenets dropdown and on the submenu click "Plugin manager", 
 or click JFusion to go to the JFusion page and click "manage plugins". You should be able to see at the bottom 3 options for installing this plugin:
@@ -26,3 +29,16 @@ located on any server as long as it grants access to download.
 
 CONFIGURING
 Once installed the plugin just needs configuring and the settings tested to confirm it is working as intended.
+
+On the configuration page where you confirm the location of the software you must enter an absolute URL (unlike normal plugins) such as www.yourexternalsite.com/api
+and make sure it points to the url where your external server uses it's own api to deal with users from another system for the purposes of the plugin.
+
+If the URL has an api compatable with the plugin (see documentation and wiki for information on making a compatable api) then it will confirm that you have entered the correct
+information and found the configuration information. This configuration information will already be hard coded where relevant in the plugin files (see documentation and wiki howto)
+but the confirmation will be that the configuration is correct on both sides.
+
+Any extra information you see such as databases and information that wouldn't be used in an external user process will be in the plugin simply to avoid JFusion errors as there is no
+way of providing a plugin without this information even if it isn't relevant so irrelevant and filler settings are supplied by default, ignore them.
+
+If everything is fine then you just need to check all the functions are working by trying out the plugin features and confirming they work with your server and the external server.
+
