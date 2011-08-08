@@ -1,0 +1,14 @@
+<!DOCTYPE JfusionAPI [
+
+ <!ELEMENT JfusionAPI (Configuration,Encryption,Key,Cookie,Domain,Server,Registration,Login,Logout)>
+ <!ELEMENT Configuration (URL,Method,Result,Communication)>
+ <!ELEMENT Encryption (Algorithm,Combination)>
+ <!ELEMENT Key (InitialValue,ProcessedValue,Generation,Process)>
+ <!ELEMENT Cookie (Name,Value,Expire,Path,Domain,httpOnly)>
+ <!ELEMENT Domain (IP,SubDomains)>
+ <!ELEMENT Server (Language,Framework,Software,Action)>
+ <!ELEMENT Registration (Requirements,Method,PreValidated,Resources)>
+ <!ELEMENT Login (Requirements,Method,PreValidated,Resources)>
+ <!ELEMENT Logout (Requirements,Method,PreValidated,Resources)>
+
+ ]>
