@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JfusionAPI SYSTEM "http://yourwebsite.com/joomla/administrator/components/com_jfusion/plugins/external/xmlspec.dtd">
+<JfusionAPI>
+   <Configuration Call="extern" Return="TRUE" Update="FALSE" Replicate="TRUE">
+      <URL>http://externalsite.com/jfusionapi.php</URL>
+      <Method Proprietary="FALSE">XML-RPC</Method>
+      <Result>XML</Result>
+      <Communication Structure="master/slave">Slave</Communication>
+   </Configuration>
+ 
+   <Encryption Call="extern" Return="FALSE" Update="FALSE" Replicate="TRUE">
+      <Algorithm>md5</Algorithm>
+      <Combination>
+      	<Hash>
+      		<Salt id="Key">Key<Salt>
+      		<Salt id="Domain">Domain</Salt>
+      	</Hash>
+      </Combination>
+   </Encryption>
+   
+   <Key Call="extern" Return="FALSE" Update="FALSE" Replicate="TRUE">
+      <InitialValue>ThisIsASecretKey123456</InitialValue>
+      <ProcessedValue>ThisIsASecretKey123456</ProcessedValue>
+      <Generation Proprietary="TRUE">UNIQUE</Generation>
+      <Process Proprietary="TRUE">UNIQUE</Process>
+   </Key>
+ 
+   <Cookie Call="extern" Return="FALSE" Update="FALSE" Replicate="TRUE">
+      <Name>CookieName</Name>
+      <Value>UsefulValue</Value>
+      <Expire>3600</Expire>
+      <Path>/path/of/remote/url/</Path>
+      <Domain SSL="TRUE">remotedomain.com</Domain>
+      <httpOnly>TRUE</httpOnly>
+   </Cookie>
+   
+   <Domain Call="extern" Return="TRUE" Update="FALSE" Replicate="TRUE">
+      <IP>000111.1101</IP>
+      <SubDomains>
+      	<SubDomain SSL="TRUE">
+      		<Reference>subdomainfollowedbydots</Reference>
+     		<Path>mysubdomainrelevanttodomaindirectory</Path>
+      		<Relationship type="intern">TRUE</Relationship>
+      	</SubDomain>
+      </SubDomains>
+   </Domain>
+   
+   <Server Call="extern" Return="TRUE" Update="FALSE" Replicate="TRUE">
+      <Language>PHP</Language>
+      <Framework>XML PARSING</Framework>
+      <Software>Joomla</Software>
+      <Action>Register</Action>
+   </Server>
+   
+   <Registration Call="extern" Return="TRUE" Update="FALSE" Replicate="TRUE">
+      <Requirements>
+      	<Var id="UserName" maxlength="24" minlength="4" regex="manual"></Var>
+      	<Var id="UserEmail" maxlength="24" minlength="4" regex="manual"></Var>
+      	<Var id="UserPassword" maxlength="24" minlength="4" regex="manual"></Var>
+      	<Var id="UserFirstName" maxlength="24" minlength="4" regex="manual"></Var>
+      	<Var id="UserLastName" maxlength="24" minlength="4" regex="manual"></Var>
+      	<Var id="DealerCode" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerName" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerFax" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerName" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerAddressLine1" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerAddressLine2" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerCity" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerState" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerCountry" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerEmail" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerEmail" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerPhone1" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerPhone2" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerZipCode" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerBusinessAddressLine1" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerBusinessAddressLine2" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerBusinessCity" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerBusinessState" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerBusinessZipCode" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="DealerBusinessCountry" maxlength="24" minlength="4" regex="manual"></Var>
+		<Var id="UsersJobRole" maxlength="24" minlength="4" regex="manual"></Var>
+      </Requirements>
+      <Method Proprietary="TRUE">DB_STORAGE</Method>
+      <PreValidated Trust="FALSE" Use="True">FALSE</PreValidated>
+      <Resources>
+        <Resource>xmlparser.php</Resource>
+        <Resource>externalinput.php</Resource>
+        <Resource>dbconfig.php</Resource>
+        <Resource>result.php</Resource>
+      </Resources>
+   </Registration>
+   
+   <Login Call="extern" Return="TRUE" Update="FALSE" Replicate="TRUE">
+      <Requirements>
+      	<Var id="UserName" maxlength="24" minlength="4" regex="manual"></Var>
+      	<Var id="UserEmail" maxlength="24" minlength="4" regex="manual"></Var>
+      	<Var id="UserPassword" maxlength="24" minlength="4" regex="manual" optional="TRUE"></Var>
+      	<Var id="UserFirstName" maxlength="24" minlength="4" regex="manual"></Var>
+      	<Var id="UserLastName" maxlength="24" minlength="4" regex="manual"></Var>
+      	<Var id="SecurityTokenValue" maxlength="24" minlength="4" regex="manual"></Var>
+      </Requirements>
+      <Method Proprietary="TRUE">COOKIE_CREATION</Method>
+      <PreValidated trust="FALSE">FALSE</PreValidated>
+      <Resources>
+        <Resource>xmlparser.php</Resource>
+        <Resource>externalinput.php</Resource>
+        <Resource>dbconfig.php</Resource>
+        <Resource>result.php</Resource>
+      </Resources>
+   </Login>
+   
+   <Logout Call="extern" Return="TRUE" Update="FALSE" Replicate="TRUE">
+      <Requirements>
+      	<Var id="UserName" maxlength="24" minlength="4" regex="manual"></Var>
+      	<Var id="UserPassword" maxlength="24" minlength="4" regex="manual"></Var>
+      	<Var id="Session" maxlength="24" minlength="4" regex="manual"></Var>
+      	<Var id="AbstractAddition" maxlength="24" minlength="4" regex="manual" optional="TRUE"></Var>
+      </Requirements>
+      <Method Proprietary="TRUE">COOKIE_DESTRUCTION</Method>
+      <PreValidated trust="FALSE">FALSE</PreValidated>
+      <Resources>
+      	<Resource>xmlparser.php</Resource>
+        <Resource>externalinput.php</Resource>
+        <Resource>dbconfig.php</Resource>
+        <Resource>result.php</Resource>
+      </Resources>
+   </Logout>
+   
+</JfusionAPI>
