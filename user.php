@@ -100,7 +100,43 @@ class JFusionUser_prestashop extends JFusionUser {
 		return $status;
     }
     function createSession($userinfo, $options, $framework = true) {
+    	// load phpxmlrpc
 	    include("phpxmlrpc/xmlrpc/lib/xmlrpc.inc");
+	    
+		// load the sample file as a template
+		$xml = simplexml_load_file('jfusion_external_apiSample.xml');
+
+		/* MAKE MODE SPECIFIC CHANGES TO XML */
+		//$xml->Server[0]->Action[0]["attribute"] = "attribute";
+		$xml->Server[0]->Action[0] = "Register";
+		$xml->Configuration[0]->URL[0] = $params->get('source_path');
+
+		// compile
+		$xml_tree = $xml->asXML();
+
+		// send
+		$f=new xmlrpcmsg('jfusion_external_api',
+			array(php_xmlrpc_encode($xml_tree))
+		);
+		print "<pre>Sending the following request:\n\n" . htmlentities($f->serialize()) . "\n\nDebug info of server data follows...\n\n";
+		$c=new xmlrpc_client($params->get('source_path'));
+		$c->setDebug(1);
+		$r=&$c->send($f);
+		if(!$r->faultCode())
+		{
+			$v=$r->value();
+			print "</pre><br/>State number is "
+				. htmlspecialchars($v->scalarval()) . "<br/>";
+			// print "<HR>I got this value back<BR><PRE>" .
+			//  htmlentities($r->serialize()). "</PRE><HR>\n";
+		}
+		else
+		{
+			print "An error occurred: ";
+			print "Code: " . htmlspecialchars($r->faultCode())
+				. " Reason: '" . htmlspecialchars($r->faultString()) . "'</pre><br/>";
+		}
+
 	}
     function filterUsername($username) {
         return $username;
