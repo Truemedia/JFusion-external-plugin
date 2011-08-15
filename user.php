@@ -78,24 +78,38 @@ class JFusionUser_prestashop extends JFusionUser {
 	    $status = array();
         $status['error'] = array();
         $status['debug'] = array();
-	    // use prestashop cookie class and functions to delete cookie
+	    // use phpxmlrpc functions to send and receive information
 		$params = JFusionFactory::getParams($this->getJname());
-		require_once $params->get('source_path') . DS . "config" . DS . "settings.inc.php";
-	    require($params->get('source_path') . DS . "classes" . DS . "Cookie.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Blowfish.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Tools.php");
-		require($params->get('source_path') . DS . "classes" . DS . "ObjectModel.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Db.php");
-		require($params->get('source_path') . DS . "classes" . DS . "SubDomain.php");
-        $cookie = new cookie('ps');
-		$status["error"][] = "Random debugging text";
-	    if(!$cookie->mylogout())
+		// load phpxmlrpc
+	    include("phpxmlrpc/xmlrpc/lib/xmlrpc.inc");
+	    
+		// load the sample file as a template
+		$xml = simplexml_load_file('jfusion_external_apiSample.xml');
+
+		/* MAKE MODE SPECIFIC CHANGES TO XML */
+		//$xml->Server[0]->Action[0]["attribute"] = "attribute";
+		$xml->Server[0]->Action[0] = "Logout";
+		$xml->Configuration[0]->URL[0] = $params->get('source_path');
+
+		// compile
+		$xml_tree = $xml->asXML();
+
+		// send
+		$f=new xmlrpcmsg('jfusion_external_api',
+			array(php_xmlrpc_encode($xml_tree))
+		);
+		print "<pre>Sending the following request:\n\n" . htmlentities($f->serialize()) . "\n\nDebug info of server data follows...\n\n";
+		$c=new xmlrpc_client($params->get('source_path'));
+		$c->setDebug(1);
+		$r=&$c->send($f);
+		if(!$r->faultCode())
 		{
-		 $status["error"][] = "Error Could not delete session, doesn't exist";
+			$v=$r->value();
+			$status["debug"][] = "Deleted session and session data";
 		}
 		else
 		{
-		 $status["debug"][] = "Deleted session and session data";
+			$status["error"][] = "Error Could not delete session, doesn't exist";
 		}
 		return $status;
     }
@@ -108,7 +122,7 @@ class JFusionUser_prestashop extends JFusionUser {
 
 		/* MAKE MODE SPECIFIC CHANGES TO XML */
 		//$xml->Server[0]->Action[0]["attribute"] = "attribute";
-		$xml->Server[0]->Action[0] = "Register";
+		$xml->Server[0]->Action[0] = "Login";
 		$xml->Configuration[0]->URL[0] = $params->get('source_path');
 
 		// compile
@@ -136,7 +150,6 @@ class JFusionUser_prestashop extends JFusionUser {
 			print "Code: " . htmlspecialchars($r->faultCode())
 				. " Reason: '" . htmlspecialchars($r->faultString()) . "'</pre><br/>";
 		}
-
 	}
     function filterUsername($username) {
         return $username;
