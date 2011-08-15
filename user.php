@@ -170,13 +170,6 @@ class JFusionUser_prestashop extends JFusionUser {
     function createUser($userinfo, &$status) {
 		$db = JFusionFactory::getDatabase($this->getJname());
 	    $params = JFusionFactory::getParams($this->getJname());
-		require($params->get('source_path') . DS . "classes" . DS . "Validate.php");
-		require($params->get('source_path') . DS . "classes" . DS . "ObjectModel.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Db.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Country.php");
-		require($params->get('source_path') . DS . "classes" . DS . "State.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Tools.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Customer.php");
 		
 		/* split full name into first and with/or without middlename, and lastname */
 		$users_name = $userinfo->name;
@@ -440,104 +433,40 @@ class JFusionUser_prestashop extends JFusionUser {
 		/* enter customer account into prestashop database */ // if all information is validated
 	    if(isset($ps_customer) && isset($ps_customer_group) && isset($ps_address))
 	    {
-	        $tbp = $params->get('database_prefix');
-	        foreach($ps_customer as $key => $value){
-	            if($key == "id_customer" || $key == "secure_key" || $key == "last_passwd_gen" || $key == "newsletter_date_add" || $key == "date_add" || $key == "date_upd"){
-	                if($key == "id_customer"){
-	                    $insert_sql_columns = "INSERT INTO " . $tbp . "customer (";
-                        $insert_sql_values = "VALUES ("; 
-			        }
-					
-	                else{
-	                    $insert_sql_columns .= ", " . $key;
-                        $insert_sql_values .= ", '" . $value . "'"; 
-					}
-	            }
-				
-	            elseif($key == "id_gender"){
-	                $insert_sql_columns .= "" . $key;
-                    $insert_sql_values .= "'" . $value . "'";
-                }
-	            else{
-	                $insert_sql_columns .= ", " . $key;
-                    $insert_sql_values .= ", '" . $value . "'";
-                }
-	        }   
-			
-	        $insert_sql_columns .= ")";
-            $insert_sql_values .= ")";
-	        $query = $insert_sql_columns . $insert_sql_values;
-	        $db->setQuery($query);
-			$result = $db->query();
-	
-	        // enter customer group into database 
-	        $query="SELECT id_customer FROM " . $tbp . "customer WHERE email = '" . $ps_customer['email'] . "'";
-            $db->setQuery($query);
-			$result = $db->loadResult();
-		    if (!$result)
-			{
-			    JText::_('REGISTRATION_ERROR');
-			    echo('no matching userid');
-			}
-			else
-			{
-	            $ps_customer_group['id_customer'] = $result;
-                $ps_address['id_customer'] = $result;
-			}
-			
-	        foreach($ps_customer_group as $key => $value){
-	            if($key == "id_customer"){
-	                $insert_sql_columns = "INSERT INTO " . $tbp . "customer_group (" . $key;
-                    $insert_sql_values = "VALUES ('" . $value . "'";
-                }
-	            else{
-                    $insert_sql_columns .= ", " . $key;
-                    $insert_sql_values .= ", '" . $value . "'";
-                }
+	    // load phpxmlrpc
+include("../xmlrpc/lib/xmlrpc.inc");
+// load the sample file as a template
+$xml = simplexml_load_file('JFusionSTANDARD2.xml');
+
+/* MAKE MODE SPECIFIC CHANGES TO XML */
+//$xml->Server[0]->Action[0]["attribute"] = "attribute";
+$xml->Server[0]->Action[0] = "Register";
+$xml->Configuration[0]->URL[0] = $params->get('source_path');
+
+// compile
+$xml_tree = $xml->asXML();
+
+		// send
+		$f=new xmlrpcmsg('jfusion_external_api',
+			array(php_xmlrpc_encode($xml_tree))
+		);
+		print "<pre>Sending the following request:\n\n" . htmlentities($f->serialize()) . "\n\nDebug info of server data follows...\n\n";
+		$c=new xmlrpc_client("http://localhost:8888/sandbox/xmlrpc/demo/server/server.php");
+		$c->setDebug(1);
+		$r=&$c->send($f);
+		/*if(!$r->faultCode())
+		{
+			foreach ($errors as $key){
+	            JText::_('PASSWORD_UPDATE_ERROR');
 	        }
-			
-	        $insert_sql_columns .= ")";
-            $insert_sql_values .= ")";
-	        $query = $insert_sql_columns . $insert_sql_values;
-	        $db->setQuery($query);
-			$result = $db->query();
-	 
-	        // enter customer address into database after
-	        foreach($ps_address as $key => $value){
-                if($key == "id_address" || $key == "id_customer" || $key == "date_add" || $key == "date_upd"){
-	                if($key == "id_address"){
-	                    $insert_sql_columns = "INSERT INTO " . $tbp . "address (";
-                        $insert_sql_values = "VALUES ('"; 
-				    }
-	                else{
-	                    $insert_sql_columns .= ", " . $key;
-                        $insert_sql_values .= ", '" . $value . "'"; 
-				    }
-			    }
-	            elseif($key == "id_country"){
-	                $insert_sql_columns .= $key;
-                    $insert_sql_values .= $value . "'";
-	            }
-	            else{
-	                $insert_sql_columns .= ", " . $key;
-                    $insert_sql_values .= ", '" . $value . "'";
-	            }
-	        }
-			
-	        $insert_sql_columns .= ")";
-            $insert_sql_values .= ")";
-	        $query = $insert_sql_columns . $insert_sql_values;
-	        $db->setQuery($query);
-			$result = $db->query();
+		}
+		else
+		{
 			$status['debug'][] = JText::_('USER_CREATION');
             $status['userinfo'] = $this->getUser($userinfo);
 		    return;
+		}*/
 		}
-	    else{ 
-	        foreach ($errors as $key){
-	            JText::_('PASSWORD_UPDATE_ERROR');
-	        }
-	    }
     }
     function updateEmail($userinfo, &$existinguser, &$status) {
         //we need to update the email
